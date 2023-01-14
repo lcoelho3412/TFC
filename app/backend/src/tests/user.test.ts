@@ -41,12 +41,11 @@ describe('Tests if login route works', () => {
         .send(login);
 
      expect(chaiHttpResponse.status).to.be.equal(200);
-     expect(chaiHttpResponse.body.token).to.be.equal(token);
+     expect(chaiHttpResponse.body.token).to.be.deep.equal(token);
 
    });
 
   it('tests if it is not possible to login with blank email', async () => {
-    expect(false).to.be.eq(true);
     chaiHttpResponse = await chai
         .request(app)
         .post('/login')
@@ -57,7 +56,6 @@ describe('Tests if login route works', () => {
   });
 
   it('tests if it is not possible to login with blank password', async () => {
-    expect(false).to.be.eq(true);
     chaiHttpResponse = await chai
         .request(app)
         .post('/login')
@@ -65,9 +63,5 @@ describe('Tests if login route works', () => {
 
     expect(chaiHttpResponse.status).to.be.equal(400);
     expect(chaiHttpResponse.body.message).to.be.equal('All fields must be filled');
-  });
-
-  it('tests if it is not possible to login with blank email', () => {
-    expect(false).to.be.eq(true);
   });
 });
