@@ -64,4 +64,24 @@ describe('Tests if login route works', () => {
     expect(chaiHttpResponse.status).to.be.equal(400);
     expect(chaiHttpResponse.body.message).to.be.equal('All fields must be filled');
   });
+
+  it('tests if it is not possible to login with Incorrect email or password', async () => {
+    chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: 'incorrect@email.com', password: 'secret_admin' });
+
+    expect(chaiHttpResponse.status).to.be.equal(401);
+    expect(chaiHttpResponse.body.message).to.be.equal('Incorrect email or password');
+  });
+
+  it('tests if it is not possible to login with Incorrect email or password', async () => {
+    chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: 'admin@admin.com', password: 'incorrectPassword' });
+
+    expect(chaiHttpResponse.status).to.be.equal(401);
+    expect(chaiHttpResponse.body.message).to.be.equal('Incorrect email or password');
+  });
 });
