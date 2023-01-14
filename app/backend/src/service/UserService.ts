@@ -1,4 +1,5 @@
 import { compareSync } from 'bcryptjs';
+import { JwtPayload } from 'jsonwebtoken';
 import ILogin from '../interfaces/ILogin';
 import TokenValidation from '../utils/jwt';
 import User from '../database/models/User';
@@ -16,5 +17,11 @@ export default class UserService {
     }
     const token = TokenValidation.tokenGenerator(login);
     return token;
+  }
+
+  static async role(token: string) {
+    const tokenTranslated = TokenValidation.tokenDecoder(token) as JwtPayload;
+    const user = await User.findOne({ where: { email: tokenTranslated.email } });
+    return user?.role;
   }
 }
