@@ -3,7 +3,6 @@ import { JwtPayload } from 'jsonwebtoken';
 import ILogin from '../interfaces/ILogin';
 import TokenValidation from '../utils/jwt';
 import User from '../database/models/User';
-// import IUser from '../interfaces/IUser';
 
 export default class UserService {
   static async login(login: ILogin): Promise<string> {
@@ -12,10 +11,10 @@ export default class UserService {
       return 'Incorrect email or password';
     }
     if (!(compareSync(login.password, user.password))) {
-      console.log('file: UserService.ts:14 ~ UserService ~ login ~ user', user);
       return 'Incorrect email or password';
     }
     const token = TokenValidation.tokenGenerator(login);
+    console.log('file: UserService.ts:17 ~ UserService ~ login ~ token', token);
     return token;
   }
 

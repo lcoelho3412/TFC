@@ -1,7 +1,7 @@
 const login = { email: "admin@admin.com",password: "secret_admin" }
 
 const token = {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInBhc3N3b3JkIjoic2VjcmV0X2FkbWluIiwiaWF0IjoxNjczNzEyNjY5LCJleHAiOjE2NzM3OTkwNjl9.iFVgdmlpwK-8_c-gMIImCF5aKeAL4EaNagWo4zXwMzw"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInBhc3N3b3JkIjoic2VjcmV0X2FkbWluIiwiaWF0IjoxNjczOTE2OTA5LCJleHAiOjE2NzQwMDMzMDl9.S4W-l0wDqc9EoVrKDAJdJ-EgAKPX3hhCKAcGKSEx8XA"
 }
 
 const user =  {

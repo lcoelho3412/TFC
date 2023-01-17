@@ -4,14 +4,14 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import App from '../app';
-import Example from '../database/models/ExampleModel';
 import User from '../database/models/User';
-import jwt from '../utils/jwt'
+import * as jwt from 'jsonwebtoken';
 
 import { Response } from 'superagent';
 
 import { login, token, user } from './mocks/user.mock'
 import TokenValidation from '../utils/jwt';
+
 
 chai.use(chaiHttp);
 
@@ -23,25 +23,20 @@ describe('Tests if login route works', () => {
 
    let chaiHttpResponse: Response;
 
-   before(async () => {
-     sinon.stub(User, "findOne").resolves(user as User);
-     sinon.stub(TokenValidation, "tokenGenerator").resolves(token);
-
-   });
-
-   after(()=>{
-     (User.findOne as sinon.SinonStub).restore();
-     (TokenValidation.tokenGenerator as sinon.SinonStub).restore();
-   })
+   afterEach(()=> sinon.restore())
 
    it('tests if login is successful with valid email and password', async () => {
-     chaiHttpResponse = await chai
+    sinon.stub(User, 'findOne').resolves(user as User)
+    sinon.stub(jwt, 'sign').resolves(token.token)
+    
+    chaiHttpResponse = await chai
         .request(app)
         .post('/login')
         .send(login);
 
+
      expect(chaiHttpResponse.status).to.be.equal(200);
-     expect(chaiHttpResponse.body.token).to.be.deep.equal(token);
+     expect(chaiHttpResponse.body).to.be.deep.equal(token);
 
    });
 
@@ -65,7 +60,9 @@ describe('Tests if login route works', () => {
     expect(chaiHttpResponse.body.message).to.be.equal('All fields must be filled');
   });
 
-  it('1 tests if it is not possible to login with Incorrect email or password', async () => {
+  it('tests if it is not possible to login with Incorrect email', async () => {
+    sinon.stub(User, 'findOne').resolves(null)
+
     chaiHttpResponse = await chai
         .request(app)
         .post('/login')
@@ -75,7 +72,7 @@ describe('Tests if login route works', () => {
     expect(chaiHttpResponse.body.message).to.be.equal('Incorrect email or password');
   });
 
-  it('2 tests if it is not possible to login with Incorrect email or password', async () => {
+  it('tests if it is not possible to login with Incorrect password', async () => {
     chaiHttpResponse = await chai
         .request(app)
         .post('/login')
