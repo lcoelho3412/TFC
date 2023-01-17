@@ -27,16 +27,16 @@ describe('Tests if login route works', () => {
 
    it('tests if login is successful with valid email and password', async () => {
     sinon.stub(User, 'findOne').resolves(user as User)
-    sinon.stub(jwt, 'sign').resolves(token.token)
+    sinon.stub(jwt, 'sign').resolves(token)
     
-    chaiHttpResponse = await chai
+    chaiHttpResponse = await chai 
         .request(app)
         .post('/login')
         .send(login);
 
 
      expect(chaiHttpResponse.status).to.be.equal(200);
-     expect(chaiHttpResponse.body).to.be.deep.equal(token);
+     expect(chaiHttpResponse.body).to.be.deep.equal({ token });
 
    });
 

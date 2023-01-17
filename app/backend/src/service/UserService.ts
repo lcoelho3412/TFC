@@ -14,7 +14,6 @@ export default class UserService {
       return 'Incorrect email or password';
     }
     const token = TokenValidation.tokenGenerator(login);
-    console.log('file: UserService.ts:17 ~ UserService ~ login ~ token', token);
     return token;
   }
 
