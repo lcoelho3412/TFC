@@ -29,4 +29,11 @@ export default class MatchesController {
     const message = await MatchesService.editMatch(Number(id));
     res.status(200).json(message);
   }
+
+  static async updateMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const { message } = await MatchesService.updateMatch(Number(id), homeTeamGoals, awayTeamGoals);
+    res.status(200).json({ message });
+  }
 }
