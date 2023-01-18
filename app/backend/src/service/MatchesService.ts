@@ -24,4 +24,9 @@ export default class MatchesService {
     const newMatch = await Matches.create({ ...match, inProgress: true });
     return newMatch;
   }
+
+  static async editMatch(id: number) {
+    await Matches.update({ inProgress: false }, { where: { id } });
+    return { message: 'Finished' };
+  }
 }

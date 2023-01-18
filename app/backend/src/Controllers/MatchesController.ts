@@ -18,4 +18,10 @@ export default class MatchesController {
     const match = await MatchesService.matchCreator(req.body);
     res.status(201).json(match);
   }
+
+  static async editMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const message = await MatchesService.editMatch(Number(id));
+    res.status(200).json(message);
+  }
 }
