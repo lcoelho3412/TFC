@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import IMatch from '../interfaces/IMatch';
 import Matches from '../database/models/Matches';
 import Team from '../database/models/Team';
@@ -40,5 +41,13 @@ export default class MatchesService {
   static async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number) {
     await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
     return { message: 'Updated' };
+  }
+
+  static async getSingleTeamHomeMatches(id: number) {
+    return Matches.findAll({ where: { [Op.and]: [{ inProgress: false }, { homeTeam: id }] } });
+  }
+
+  static async getSingleTeamAwayMatches(id: number) {
+    return Matches.findAll({ where: { [Op.and]: [{ inProgress: false }, { awayTeam: id }] } });
   }
 }

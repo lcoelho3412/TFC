@@ -2,6 +2,7 @@ import * as express from 'express';
 import loginRoutes from './routes/loginRoutes';
 import teamsRoutes from './routes/teamsRoutes';
 import matchesRoutes from './routes/matchesRoutes';
+import leaderboardRouter from './routes/leaderboardRouter';
 
 class App {
   public app: express.Express;
@@ -25,9 +26,11 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+
     this.app.use('/login', loginRoutes);
     this.app.use('/teams', teamsRoutes);
     this.app.use('/matches', matchesRoutes);
+    this.app.use('/leaderboard', leaderboardRouter);
   }
 
   public start(PORT: string | number):void {
