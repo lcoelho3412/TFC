@@ -13,4 +13,14 @@ export default class TokenValidation {
     const decodedToken = verify(token, jwtSecret);
     return decodedToken;
   }
+
+  static tokenValidator(token: string) {
+    const jwtSecret = process.env.JWT_SECRET || 'jwt_secret';
+    try {
+      const data = verify(token, jwtSecret);
+      return data;
+    } catch (error) {
+      return 'Unauthorized';
+    }
+  }
 }

@@ -11,7 +11,7 @@ interface IMatch {
   inProgress?: boolean,
 }
 
-class Match extends Model<IMatch> {
+class Matches extends Model<IMatch> {
   declare id: number;
   declare homeTeam: number;
   declare homeTeamGoals: number;
@@ -20,7 +20,7 @@ class Match extends Model<IMatch> {
   declare inProgress: boolean;
 }
 
-Match.init({
+Matches.init({
   id: {
     type: INTEGER,
     allowNull: false,
@@ -55,14 +55,14 @@ Match.init({
 }, {
   underscored: true,
   sequelize: db,
-  modelName: 'match',
+  modelName: 'matches',
   timestamps: false,
 });
 
-Match.belongsTo(Team, { foreignKey: 'homeTeam', as: 'teamHome' });
-Match.belongsTo(Team, { foreignKey: 'awayTeam', as: 'teamAway' });
+Matches.belongsTo(Team, { foreignKey: 'homeTeam', as: 'teamHome' });
+Matches.belongsTo(Team, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-Team.hasMany(Match, { foreignKey: 'homeTeam', as: 'teamHome' });
-Team.hasMany(Match, { foreignKey: 'awayTeam', as: 'teamAway' });
+Team.hasMany(Matches, { foreignKey: 'homeTeam', as: 'teamHome' });
+Team.hasMany(Matches, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-export default Match;
+export default Matches;

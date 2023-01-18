@@ -7,10 +7,15 @@ export default class MatchesController {
 
     let matches;
     if (inProgress) {
-      matches = await MatchesService.getAllMatches();
-    } else {
       matches = await MatchesService.getMatchesInProgress(String(inProgress));
+    } else {
+      matches = await MatchesService.getAllMatches();
     }
     res.status(200).json(matches);
+  }
+
+  static async createMatch(req: Request, res: Response) {
+    const match = await MatchesService.matchCreator(req.body);
+    res.status(201).json(match);
   }
 }
