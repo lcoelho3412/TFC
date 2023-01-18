@@ -12,12 +12,19 @@ export default class MatchesService {
 
   static async getMatchesInProgress(param: string) {
     const inProgress = JSON.parse(param);
-    console.log('file: MatchesService.ts:15 ~ MatchesService ~ getMatchesInProgress', inProgress);
     return Matches.findAll({ where: { inProgress },
       include: [
         { model: Team, as: 'teamHome', attributes: { exclude: ['id'] } },
         { model: Team, as: 'teamAway', attributes: { exclude: ['id'] } },
       ] });
+  }
+
+  static async findTeamByPk(homeTeam: string, awayTeam: string) {
+    const homeTeamFinder = await Team.findByPk(homeTeam);
+    const awayTeamFinder = await Team.findByPk(awayTeam);
+    if (!homeTeamFinder || !awayTeamFinder) {
+      return ({ status: 404, message: 'There is no team with such id!' });
+    } return ({ status: null, message: null });
   }
 
   static async matchCreator(match: IMatch) {

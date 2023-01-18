@@ -15,6 +15,11 @@ export default class MatchesController {
   }
 
   static async createMatch(req: Request, res: Response) {
+    const { homeTeam, awayTeam } = req.body;
+    const teamExists = await MatchesService.findTeamByPk(homeTeam, awayTeam);
+    if (teamExists.status === 404) {
+      return res.status(404).json({ message: teamExists.message });
+    }
     const match = await MatchesService.matchCreator(req.body);
     res.status(201).json(match);
   }
